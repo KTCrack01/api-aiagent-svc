@@ -26,7 +26,7 @@ export OPENAI_API_KEY="your-openai-api-key-here"
 **방법 2: application.properties에 직접 설정 (개발용)**
 ```properties
 # src/main/resources/application.properties
-openai.api.key=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
+openai.api.key="your-openai-api-key-here"
 ```
 
 ### 2. 애플리케이션 실행
