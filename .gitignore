@@ -35,3 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Secrets and Sensitive Data ###
+src/main/resources/application-secrets.properties
+src/main/resources/application-secrets.yml
+src/main/resources/application-secrets.yaml
+*.secrets.*
+secrets/
