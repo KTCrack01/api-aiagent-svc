@@ -17,7 +17,7 @@ public class OpenAIService {
     @Value("${openai.api.key:}")
     private String apiKey;
 
-    @Value("${openai.api.url:https://api.openai.com/v1/chat/completions}")
+    @Value("${openai.api.url:}")
     private String apiUrl;
 
     private final WebClient webClient;
