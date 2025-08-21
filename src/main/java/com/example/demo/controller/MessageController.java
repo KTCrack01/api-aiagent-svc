@@ -46,12 +46,7 @@ public class MessageController {
 
     @PostMapping("/chat")
     public Mono<ResponseEntity<ChatResponse>> sendChatPrompt(@RequestBody ChatRequest request) {
-        return openAIService.generateResponse(
-                request.getPrompt(), 
-                request.getModel(), 
-                request.getMaxTokens(), 
-                request.getTemperature()
-            )
+        return openAIService.generateResponse(request.getPrompt(), request.getModel())
                 .map(gptResponse -> {
                     ChatResponse response = new ChatResponse();
                     response.setPrompt(request.getPrompt());
@@ -72,7 +67,6 @@ public class MessageController {
     public ResponseEntity<Map<String, Object>> getAvailableModels() {
         Map<String, Object> response = new HashMap<>();
         response.put("models", GPTModels.AVAILABLE_MODELS);
-        response.put("defaultModel", GPTModels.getDefaultModel());
         return ResponseEntity.ok(response);
     }
 }

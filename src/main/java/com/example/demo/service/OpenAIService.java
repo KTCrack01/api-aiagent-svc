@@ -30,19 +30,13 @@ public class OpenAIService {
         this.objectMapper = new ObjectMapper();
     }
 
-    public Mono<String> generateResponse(String prompt) {
-        return generateResponse(prompt, "gpt-4o-mini", 1000, 0.7);
-    }
-
-    public Mono<String> generateResponse(String prompt, String model, Integer maxTokens, Double temperature) {
+    public Mono<String> generateResponse(String prompt, String model) {
         if (apiKey == null || apiKey.isEmpty()) {
             return Mono.error(new RuntimeException("OpenAI API key is not configured"));
         }
 
         ObjectNode requestBody = objectMapper.createObjectNode();
         requestBody.put("model", model);
-        requestBody.put("max_tokens", maxTokens);
-        requestBody.put("temperature", temperature);
 
         ArrayNode messages = objectMapper.createArrayNode();
         ObjectNode message = objectMapper.createObjectNode();
@@ -56,6 +50,15 @@ public class OpenAIService {
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey)
                 .bodyValue(requestBody)
                 .retrieve()
+                .onStatus(status -> status.is4xxClientError() || status.is5xxServerError(),
+                        response -> response.bodyToMono(String.class)
+                                .flatMap(errorBody -> {
+                                    System.out.println("=== OPENAI API ERROR DETAILS ===");
+                                    System.out.println("Status: " + response.statusCode());
+                                    System.out.println("Error Body: " + errorBody);
+                                    System.out.println("================================");
+                                    return Mono.error(new RuntimeException("OpenAI API Error: " + errorBody));
+                                }))
                 .bodyToMono(JsonNode.class)
                 .map(response -> {
                     try {
