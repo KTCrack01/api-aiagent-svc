@@ -39,8 +39,6 @@ openai.api.key="your-openai-api-key-here"
 ./gradlew bootRun
 ```
 
-서버는 `http://localhost:3001`에서 실행됩니다.
-
 ## API 엔드포인트
 
 ### 1. 메시지 전송
@@ -73,8 +71,6 @@ Content-Type: application/json
   "prompt": "ChatGPT에 보낼 프롬프트",
   "userId": "사용자 ID",
   "model": "gpt-4o-mini",
-  "maxTokens": 1000,
-  "temperature": 0.7
 }
 ```
 
@@ -120,11 +116,6 @@ src/main/java/com/example/demo/
 ## 프론트엔드 연동
 
 프론트엔드에서는 다음 환경 변수를 설정하세요:
-
-```javascript
-// .env.local 또는 환경 변수
-NEXT_PUBLIC_API_BASE_URL=http://localhost:3001
-```
 
 ## CORS 설정
 
