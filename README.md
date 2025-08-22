@@ -54,6 +54,8 @@ docker run --rm -p 8080:8080 \
 
 기본 포트는 `8080`입니다([ADR-005](../msa-project-hub/docs/adr/ADR-005-service-port-convention.md)). 여러 서비스와 동시에 실행 시 `-p 18080:8080`처럼 포트 매핑을 조정하세요.
 
+OpenAI 연동에 대한 배경 및 보안 가이드는 [ADR-009](../msa-project-hub/docs/adr/ADR-009-openai-api-integration.md)와 [ADR-012](../msa-project-hub/docs/adr/ADR-012-secret-and-config-management.md)를 참고하세요.
+
 ## API 엔드포인트
 
 ### 1. 메시지 전송
