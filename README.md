@@ -39,6 +39,21 @@ openai.api.key="your-openai-api-key-here"
 ./gradlew bootRun
 ```
 
+### 3. Docker
+
+```bash
+# 이미지 빌드
+docker build -t api-aiagent-svc:local .
+
+# 컨테이너 실행 (예시)
+docker run --rm -p 8080:8080 \
+  -e OPENAI_API_KEY=sk-... \
+  -e OPENAI_API_URL=https://api.openai.com/v1/chat/completions \
+  api-aiagent-svc:local
+```
+
+기본 포트는 `8080`입니다([ADR-005](../msa-project-hub/docs/adr/ADR-005-service-port-convention.md)). 여러 서비스와 동시에 실행 시 `-p 18080:8080`처럼 포트 매핑을 조정하세요.
+
 ## API 엔드포인트
 
 ### 1. 메시지 전송
@@ -119,7 +134,7 @@ src/main/java/com/example/demo/
 
 ## CORS 설정
 
-백엔드는 모든 오리진에서의 요청을 허용하도록 설정되어 있습니다. 프로덕션 환경에서는 적절한 CORS 설정을 추가하세요.
+`WebConfig`에서 프론트엔드 도메인(`http://localhost:3000`, 배포 주소)을 허용하도록 설정되어 있습니다. 운영 환경에서는 필요한 오리진만 허용하도록 조정하세요.
 
 ## 로깅
 
